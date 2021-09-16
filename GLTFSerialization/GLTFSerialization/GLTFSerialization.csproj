@@ -70,10 +70,10 @@
         <ExcludedUnityPlayers>UAP</ExcludedUnityPlayers>
       </PropertyGroup>
       <ItemGroup>
-        <PackageReference Include="Microsoft.Net.Compilers" Version="2.7.0">
-          <IncludeAssets>all</IncludeAssets>
+        <PackageReference Include="Microsoft.Net.Compilers" Version="3.11.0">
+          <IncludeAssets>runtime; compile; build; native; analyzers; buildtransitive</IncludeAssets>
           <ExcludeAssets>contentFiles</ExcludeAssets>
-          <PrivateAssets>contentFiles;analyzers</PrivateAssets>
+          <PrivateAssets>contentfiles; analyzers</PrivateAssets>
         </PackageReference>
       </ItemGroup>
     </When>
@@ -91,6 +91,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" ExcludeAssets="runtime"/>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" ExcludeAssets="runtime" />
   </ItemGroup>
 </Project>
