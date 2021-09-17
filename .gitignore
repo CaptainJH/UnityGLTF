@@ -160,3 +160,7 @@ TestProjects/*/Temp/
 TestProjects/*/*.sln
 TestProjects/*/*.csproj
 GLTFSerialization/.idea
+
+# resource folder
+UnityGLTF/Assets/PolygonOffice*
+UnityGLTF/Assets/Resources/UnityGLTFSettings.asset*

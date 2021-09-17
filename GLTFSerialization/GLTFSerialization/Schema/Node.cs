@@ -285,9 +285,23 @@ namespace GLTF.Schema
 				writer.WriteEndObject();
 			}
 
+			if (!string.IsNullOrEmpty(ExtraText))
+			{
+				writer.WritePropertyName("extensions");
+				writer.WriteStartObject();
+				writer.WritePropertyName(UNITY_k12_sequenceExtensionFactory.EXTENSION_NAME);
+				writer.WriteStartObject();
+				writer.WritePropertyName("TestText");
+				writer.WriteValue(ExtraText);
+				writer.WriteEndObject();
+				writer.WriteEndObject();
+			}
+
 			base.Serialize(writer);
 
 			writer.WriteEndObject();
 		}
+
+		public string ExtraText = string.Empty;
 	}
 }

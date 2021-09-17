@@ -726,6 +726,15 @@ namespace UnityGLTF
 
 		private NodeId ExportNode(Transform nodeTransform)
 		{
+			if (_root.ExtensionsUsed == null)
+			{
+				_root.ExtensionsUsed = new List<string>(new[] { "UNITY_k12_sequence" });
+			}
+			else if (!_root.ExtensionsUsed.Contains("UNITY_k12_sequence"))
+			{
+				_root.ExtensionsUsed.Add("UNITY_k12_sequence");
+			}
+
 			var node = new Node();
 
 			if (ExportNames)
@@ -740,6 +749,10 @@ namespace UnityGLTF
 			if (nodeTransform.GetComponent<SkinnedMeshRenderer>() && ContainsValidRenderer(nodeTransform.gameObject))
 			{
 				_skinnedNodes.Add(nodeTransform);
+			}
+			if (nodeTransform.GetComponent<U4KSequenceDesc>())
+			{
+				node.ExtraText = nodeTransform.GetComponent<U4KSequenceDesc>().TestText;
 			}
 
 			//export camera attached to node
