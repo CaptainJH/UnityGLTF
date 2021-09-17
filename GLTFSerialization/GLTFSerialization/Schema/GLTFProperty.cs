@@ -21,6 +21,7 @@ namespace GLTF.Schema
 		private static DefaultExtensionFactory _defaultExtensionFactory = new DefaultExtensionFactory();
 		private static KHR_materials_pbrSpecularGlossinessExtensionFactory _KHRExtensionFactory = new KHR_materials_pbrSpecularGlossinessExtensionFactory();
 		private static ExtTextureTransformExtensionFactory _TexTransformFactory = new ExtTextureTransformExtensionFactory();
+		private static UNITY_k12_sequenceExtensionFactory _UnityK12SequenceExtensionFactory = new UNITY_k12_sequenceExtensionFactory();
 
 		public static bool IsExtensionRegistered(string extensionName)
 		{
@@ -205,6 +206,10 @@ namespace GLTF.Schema
 					else if (extensionName.Equals(ExtTextureTransformExtensionFactory.EXTENSION_NAME))
 					{
 						extensionsCollection.Add(extensionName, _TexTransformFactory.Deserialize(root, childAsJProperty));
+					}
+					else if (extensionName.Equals(UNITY_k12_sequenceExtensionFactory.EXTENSION_NAME))
+					{
+						extensionsCollection.Add(extensionName, _UnityK12SequenceExtensionFactory.Deserialize(root, childAsJProperty));
 					}
 					else
 					{

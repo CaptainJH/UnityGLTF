@@ -1514,6 +1514,17 @@ namespace UnityGLTF
 				nodeObj.transform.localRotation *= Quaternion.Euler(0, 180, 0);
 			}
 
+			const string seqExt = UNITY_k12_sequenceExtensionFactory.EXTENSION_NAME;
+			UNITY_k12_sequenceExtension seqExtension = null;
+			if (_gltfRoot.ExtensionsUsed != null
+				&& _gltfRoot.ExtensionsUsed.Contains(seqExt)
+				&& node.Extensions != null
+				&& node.Extensions.ContainsKey(seqExt))
+			{
+				seqExtension = node.Extensions[seqExt] as UNITY_k12_sequenceExtension;
+				node.ExtraText = seqExtension.JsonString;
+			}
+
 			nodeObj.SetActive(true);
 
 			progressStatus.NodeLoaded++;

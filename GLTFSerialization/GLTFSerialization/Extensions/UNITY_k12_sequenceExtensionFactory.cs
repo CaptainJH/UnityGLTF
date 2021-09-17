@@ -6,19 +6,21 @@ using Newtonsoft.Json.Linq;
 
 namespace GLTF.Schema
 {
-	class UNITY_k12_sequenceExtensionFactory : ExtensionFactory
+	public class UNITY_k12_sequenceExtensionFactory : ExtensionFactory
 	{
 		public const string EXTENSION_NAME = "UNITY_k12_sequence";
+		public const string JSONTEXT = "TestText";
 
 		public override IExtension Deserialize(GLTFRoot root, JProperty extensionToken)
 		{
-
+			string jsonTex = string.Empty;
 			if (extensionToken != null)
 			{
-
+				JToken texToken = extensionToken.Value[JSONTEXT];
+				jsonTex = texToken.ToString();
 			}
 
-			return new UNITY_k12_sequenceExtension();
+			return new UNITY_k12_sequenceExtension(jsonTex);
 		}
 	}
 }
