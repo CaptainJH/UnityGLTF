@@ -752,7 +752,7 @@ namespace UnityGLTF
 			}
 			if (nodeTransform.GetComponent<U4KSequenceDesc>())
 			{
-				node.ExtraText = nodeTransform.GetComponent<U4KSequenceDesc>().jsonString;
+				node.U4KSequenceJsonString = nodeTransform.GetComponent<U4KSequenceDesc>().jsonString;
 			}
 
 			//export camera attached to node

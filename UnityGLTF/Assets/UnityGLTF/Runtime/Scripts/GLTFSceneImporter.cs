@@ -1522,7 +1522,7 @@ namespace UnityGLTF
 				&& node.Extensions.ContainsKey(seqExt))
 			{
 				seqExtension = node.Extensions[seqExt] as UNITY_k12_sequenceExtension;
-				node.ExtraText = seqExtension.JsonString;
+				node.U4KSequenceJsonString = seqExtension.JsonString;
 			}
 
 			nodeObj.SetActive(true);

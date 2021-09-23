@@ -17,6 +17,7 @@ public class U4KSequenceDesc : MonoBehaviour
 
     public void SaveToJson()
 	{
+		if (sequence == null) return;
         sequence.Name = SequenceName;
         jsonString = JsonConvert.SerializeObject(sequence, JsonSettings);
 	}

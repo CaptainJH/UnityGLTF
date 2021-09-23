@@ -9,7 +9,7 @@ namespace GLTF.Schema
 	public class UNITY_k12_sequenceExtensionFactory : ExtensionFactory
 	{
 		public const string EXTENSION_NAME = "UNITY_k12_sequence";
-		public const string JSONTEXT = "TestText";
+		public const string JSONTEXT = "U4KSequenceJsonString";
 
 		public override IExtension Deserialize(GLTFRoot root, JProperty extensionToken)
 		{

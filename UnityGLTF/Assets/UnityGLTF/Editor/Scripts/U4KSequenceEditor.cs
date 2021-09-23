@@ -114,7 +114,6 @@ public class U4KSequenceEditor : Editor
 					}
 				}
 			}
-			seqDesc.SaveToJson();
 		}
 
 		if (seqDesc.sequence.Actions.Count > 0)
@@ -133,7 +132,8 @@ public class U4KSequenceEditor : Editor
 						EditorGUILayout.BeginHorizontal();
 						EditorGUILayout.LabelField(p.Name);
 						var originV = p.GetValue(ac) as string;
-						EditorGUILayout.TextField(originV);
+						var curV = EditorGUILayout.TextField(originV);
+						p.SetValue(ac, curV);
 						EditorGUILayout.EndHorizontal();
 					}
 				}
@@ -156,6 +156,8 @@ public class U4KSequenceEditor : Editor
 			EditorGUIUtility.ExitGUI();
 		}
 		serializedObject.ApplyModifiedProperties();
+
+		seqDesc.SaveToJson();
 	}
 
 	void OnAddAction(object userData)

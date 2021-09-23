@@ -285,14 +285,14 @@ namespace GLTF.Schema
 				writer.WriteEndObject();
 			}
 
-			if (!string.IsNullOrEmpty(ExtraText))
+			if (!string.IsNullOrEmpty(U4KSequenceJsonString))
 			{
 				writer.WritePropertyName("extensions");
 				writer.WriteStartObject();
 				writer.WritePropertyName(UNITY_k12_sequenceExtensionFactory.EXTENSION_NAME);
 				writer.WriteStartObject();
-				writer.WritePropertyName("TestText");
-				writer.WriteValue(ExtraText);
+				writer.WritePropertyName("U4KSequenceJsonString");
+				writer.WriteValue(U4KSequenceJsonString);
 				writer.WriteEndObject();
 				writer.WriteEndObject();
 			}
@@ -302,6 +302,6 @@ namespace GLTF.Schema
 			writer.WriteEndObject();
 		}
 
-		public string ExtraText = string.Empty;
+		public string U4KSequenceJsonString = string.Empty;
 	}
 }
