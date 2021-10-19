@@ -220,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &454208653
 Light:
   m_ObjectHideFlags: 0
@@ -325,8 +325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9087a95f22bcee64ebc45f6deec08714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GLTFUri: D:\temp\gltf_export\HomeOfficeTest\HomeOffice.gltf
-  Multithreaded: 1
+  GLTFUri: D:\temp\gltf_export\HomeOfficeSceneTest\Export-Test.gltf
+  Multithreaded: 0
   UseStream: 1
   AppendStreamingAssets: 0
   PlayAnimationOnLoad: 1
