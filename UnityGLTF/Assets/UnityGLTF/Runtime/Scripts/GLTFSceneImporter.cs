@@ -1525,6 +1525,17 @@ namespace UnityGLTF
 				node.U4KSequenceJsonString = seqExtension.JsonString;
 			}
 
+			if (node.Camera != null)
+			{
+				Debug.Log("Camera!");
+				Camera cam = nodeObj.AddComponent<Camera>();
+				cam.name = node.Name;
+				cam.aspect = (float)node.Camera.Value.Perspective.AspectRatio;
+				cam.fieldOfView = Mathf.Rad2Deg * (float)node.Camera.Value.Perspective.YFov;
+				cam.nearClipPlane = (float)node.Camera.Value.Perspective.ZNear;
+				cam.farClipPlane = (float)node.Camera.Value.Perspective.ZFar;
+			}
+
 			nodeObj.SetActive(true);
 
 			progressStatus.NodeLoaded++;
