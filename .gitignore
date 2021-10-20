@@ -164,3 +164,6 @@ GLTFSerialization/.idea
 # resource folder
 UnityGLTF/Assets/PolygonOffice*
 UnityGLTF/Assets/Resources/UnityGLTFSettings.asset*
+
+# build folder
+GLTFSerialization/build

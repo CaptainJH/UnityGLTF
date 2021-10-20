@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTFSerialization", "GLTFSerialization\GLTFSerialization.csproj", "{72AC331F-9810-4DE2-8EA3-84559A787218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLTFSerialization", "GLTFSerialization\GLTFSerialization.csproj", "{72AC331F-9810-4DE2-8EA3-84559A787218}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTFSerializationTests", "Tests\GLTFSerializationTests\GLTFSerializationTests.csproj", "{821B87A3-D8FA-407A-BC58-928A859C71C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTFSerializationUWPTests", "Tests\GLTFSerializationUWPTests\GLTFSerializationUWPTests.csproj", "{EAD1EF7E-A898-4741-9DF5-269A33E6F875}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTFSerializationCLI", "GLTFSerializationCLI\GLTFSerializationCLI.csproj", "{3C8EFD3C-66B2-4D83-9DD2-E6A4C4D3F64C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLTFSerializationCLI", "GLTFSerializationCLI\GLTFSerializationCLI.csproj", "{3C8EFD3C-66B2-4D83-9DD2-E6A4C4D3F64C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

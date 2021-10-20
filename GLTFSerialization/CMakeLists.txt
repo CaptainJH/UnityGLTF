@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.10)
+project("GLTFSerialization" VERSION 0.1.0 LANGUAGES CSharp)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(GLTFSerialization_repository_root ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${GLTFSerialization_repository_root}/cmake")
+include(CMakeMacros)
+add_subdirectory("GLTFSerialization/")
