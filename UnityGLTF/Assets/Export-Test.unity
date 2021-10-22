@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: d5bb0a3638cb89d49b3a1bf5911dcb85,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +119,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -3627,6 +3630,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &895538503
@@ -4967,6 +4971,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1357696437}
+  - component: {fileID: 1357696439}
   - component: {fileID: 1357696438}
   m_Layer: 0
   m_Name: HomeOffice
@@ -5114,15 +5119,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad80fb2eceb4d1448ae03ee72eb43a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SequenceName: SequenceTest
-  jsonString: "{\r\n  \"$type\": \"U4KSequence, UnityGLTFScripts\",\r\n  \"Name\":
-    \"SequenceTest\",\r\n  \"Trigger\": {\r\n    \"$type\": \"ClickEventDesc, UnityGLTFScripts\",\r\n   
-    \"StartEvent\": 1,\r\n    \"clickType\": 0\r\n  },\r\n  \"Actions\": {\r\n   
-    \"$type\": \"System.Collections.Generic.List`1[[AnimAction, UnityGLTFScripts]],
-    mscorlib\",\r\n    \"$values\": [\r\n      {\r\n        \"$type\": \"SendEventAction,
-    UnityGLTFScripts\",\r\n        \"Type\": 3,\r\n        \"EventName\": \"Action1\",\r\n       
-    \"Param0\": \"Action1-Param0\",\r\n        \"Param1\": \"Action1-Param1\"\r\n     
-    }\r\n    ]\r\n  }\r\n}"
+  SequenceName: Seq1
+  jsonString: "{\r\n  \"$type\": \"CoursePlayer.Core.SceneSequence, UnityGLTFScripts\",\r\n 
+    \"Name\": \"Seq1\",\r\n  \"Trigger\": {\r\n    \"$type\": \"CoursePlayer.Core.PluginEventDesc,
+    UnityGLTFScripts\",\r\n    \"StartEvent\": 6,\r\n    \"EventName\": \"PluginEvent1\"\r\n 
+    },\r\n  \"Actions\": {\r\n    \"$type\": \"System.Collections.Generic.List`1[[CoursePlayer.Core.AnimAction,
+    UnityGLTFScripts]], mscorlib\",\r\n    \"$values\": [\r\n      {\r\n        \"$type\":
+    \"CoursePlayer.Core.PlayAnimationAction, UnityGLTFScripts\",\r\n        \"Type\":
+    16,\r\n        \"AnimationName\": \"PlayingANimationName\"\r\n      }\r\n   
+    ]\r\n  }\r\n}"
+--- !u!114 &1357696439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357696436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad80fb2eceb4d1448ae03ee72eb43a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SequenceName: Seq0-JHQ
+  jsonString: "{\r\n  \"$type\": \"CoursePlayer.Core.SceneSequence, UnityGLTFScripts\",\r\n 
+    \"Name\": \"Seq0-JHQ\",\r\n  \"Trigger\": {\r\n    \"$type\": \"CoursePlayer.Core.ClickEventDesc,
+    UnityGLTFScripts\",\r\n    \"StartEvent\": 1,\r\n    \"clickType\": 0\r\n  },\r\n 
+    \"Actions\": {\r\n    \"$type\": \"System.Collections.Generic.List`1[[CoursePlayer.Core.AnimAction,
+    UnityGLTFScripts]], mscorlib\",\r\n    \"$values\": [\r\n      {\r\n        \"$type\":
+    \"CoursePlayer.Core.DisappearAction, UnityGLTFScripts\",\r\n        \"Type\":
+    5\r\n      }\r\n    ]\r\n  }\r\n}"
 --- !u!1001 &1357887397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5667,6 +5692,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1528374158
@@ -5828,6 +5854,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1577488465
@@ -6077,6 +6104,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1618644322
@@ -6502,6 +6530,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1743619614
@@ -7052,6 +7081,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1842117778
@@ -7704,6 +7734,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &2076412559
