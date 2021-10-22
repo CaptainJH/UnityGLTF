@@ -15,35 +15,28 @@ public class U4KSequenceEditor : Editor
 
 	string[] triggerTypes = {
         "OnClick",
-        "OnDrag",
-        "OnDrop",
-        "OnMouseEnter",
-        "OnMouseExit",
-        "OnSequenceEvent",
-        "OnContentUpdate",
-        "OnFrame",
-        "OnBreakPoint",
-        "OnPrint",
+        "OnPluginEvent",
+		"OnEnterSlide",
         };
 	int triggerTypeIndex = 0;
 
 
 	string[] actionTypes = {
-		"RunPython",
+		//"RunPython",
 		"CallPluginAction",
-		"SendEvent",
 		"Appear",
 		"Disappear",
-		"Flash",
-		"Rotate",
-		"Move",
-		"Wipe",
-		"TextWriterEffect",
-		"ChangeColor",
-		"ChangeBackgroundColor",
-		"ChangeContent",
-		"GotoAndPlay",
-		"GotoAndStop",
+		//"Flash",
+		//"Rotate",
+		//"Move",
+		//"Wipe",
+		//"TextWriterEffect",
+		//"ChangeColor",
+		//"ChangeBackgroundColor",
+		//"ChangeContent",
+		//"GotoAndPlay",
+		//"GotoAndStop",
+		"PlayAnimation",
 		};
 	int actionTypeIndex = 0;
 
@@ -52,7 +45,7 @@ public class U4KSequenceEditor : Editor
 		NameProp = serializedObject.FindProperty("SequenceName");
 		seqDesc = target as U4KSequenceDesc;
 		seqDesc.LoadFromJson();
-		if (seqDesc.sequence == null) seqDesc.sequence = new U4KSequence();
+		if (seqDesc.sequence == null) seqDesc.sequence = new CoursePlayer.Core.SceneSequence();
 	}
 
 	public override void OnInspectorGUI()
@@ -67,15 +60,15 @@ public class U4KSequenceEditor : Editor
 			switch (triggerTypeIndex)
 			{
 				case 0:
-					seqDesc.sequence.Trigger = new ClickEventDesc();
+					seqDesc.sequence.Trigger = new CoursePlayer.Core.ClickEventDesc();
 					break;
 
 				case 1:
-					seqDesc.sequence.Trigger = new DragEventDesc();
+					seqDesc.sequence.Trigger = new CoursePlayer.Core.PluginEventDesc();
 					break;
 
 				case 2:
-					seqDesc.sequence.Trigger = new DropEventDesc();
+					seqDesc.sequence.Trigger = new CoursePlayer.Core.OnEnterSlideEventDesc();
 					break;
 
 				default:
@@ -87,12 +80,7 @@ public class U4KSequenceEditor : Editor
 		{
 			var triggerType = seqDesc.sequence.Trigger.GetType();
 			PropertyInfo[] props = null;
-			if (seqDesc.sequence.Trigger is ClickEventDesc)
-				props = typeof(ClickEventDesc).GetProperties();
-			else if (seqDesc.sequence.Trigger is DragEventDesc)
-				props = typeof(DragEventDesc).GetProperties();
-			else if (seqDesc.sequence.Trigger is DropEventDesc)
-				props = typeof(DropEventDesc).GetProperties();
+			props = seqDesc.sequence.Trigger.GetType().GetProperties();
 
 			if (props != null)
 			{
@@ -111,6 +99,16 @@ public class U4KSequenceEditor : Editor
 
 						if (curIndex != nextIndex)
 							p.SetValue(seqDesc.sequence.Trigger, allEnums.GetValue(nextIndex));
+					}
+					else if (p.PropertyType == typeof(string))
+					{
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.LabelField(p.Name);
+						var eventName = p.GetValue(seqDesc.sequence.Trigger) as string;
+						var newName = EditorGUILayout.TextField(eventName);
+						if (newName != eventName)
+							p.SetValue(seqDesc.sequence.Trigger, newName);
+						EditorGUILayout.EndHorizontal();
 					}
 				}
 			}
@@ -163,14 +161,22 @@ public class U4KSequenceEditor : Editor
 	void OnAddAction(object userData)
 	{
 		string newActionName = userData as string;
-		AnimAction newAction = null;
+		CoursePlayer.Core.AnimAction newAction = null;
 		if (newActionName == "CallPluginAction")
 		{
-			newAction = new CallPluginAction();
+			newAction = new CoursePlayer.Core.CallPluginAction();
 		}
-		else if (newActionName == "SendEvent")
+		else if (newActionName == "Appear")
 		{
-			newAction = new SendEventAction();
+			newAction = new CoursePlayer.Core.AppearAction();
+		}
+		else if(newActionName == "Disappear")
+		{
+			newAction = new CoursePlayer.Core.DisappearAction();
+		}
+		else if(newActionName == "PlayAnimation")
+		{
+			newAction = new CoursePlayer.Core.PlayAnimationAction();
 		}
 
 		if (newAction != null) seqDesc.sequence.Actions.Add(newAction);

@@ -752,7 +752,11 @@ namespace UnityGLTF
 			}
 			if (nodeTransform.GetComponent<U4KSequenceDesc>())
 			{
-				node.U4KSequenceJsonString = nodeTransform.GetComponent<U4KSequenceDesc>().jsonString;
+				List<string> jsonTextArray = new List<string>();
+				var sequences = nodeTransform.GetComponents<U4KSequenceDesc>();
+				foreach (var s in sequences)
+					jsonTextArray.Add(s.jsonString);
+				node.U4KSequenceJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonTextArray);
 			}
 
 			//export camera attached to node

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 public class U4KSequenceDesc : MonoBehaviour
 {
 	public string SequenceName = string.Empty;
-    public U4KSequence sequence;
+    public CoursePlayer.Core.SceneSequence sequence;
 	public string jsonString = string.Empty;
 
     public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
@@ -22,9 +22,9 @@ public class U4KSequenceDesc : MonoBehaviour
         jsonString = JsonConvert.SerializeObject(sequence, JsonSettings);
 	}
 
-	public U4KSequence LoadFromJson()
+	public CoursePlayer.Core.SceneSequence LoadFromJson()
 	{
-		sequence = JsonConvert.DeserializeObject<U4KSequence>(jsonString, JsonSettings);
+		sequence = JsonConvert.DeserializeObject<CoursePlayer.Core.SceneSequence>(jsonString, JsonSettings);
 		return sequence;
 	}
 }
