@@ -154,14 +154,14 @@ namespace CoursePlayer.Core
 		GotoAndPlay,
 		GotoAndStop,
 		PlayAnimation,
-		//CameraTurnTo,
+		CameraTurnTo,
 	}
 
 	public class AnimAction
 	{
 		public EActionType Type = EActionType.None;
 		public List<string> AffectedControls
-		{ get; set; }
+		{ get; set; } = new List<string>();
 	}
 
 	public class RunPythonAction : AnimAction
@@ -342,6 +342,20 @@ namespace CoursePlayer.Core
 		public PlayAnimationAction()
 		{
 			Type = EActionType.PlayAnimation;
+		}
+	}
+
+	public class CameraTurnToAction : TimebasedAction
+	{
+		[Newtonsoft.Json.JsonIgnore]
+		public U4KSequenceDesc Target
+		{ get; set; } = null;
+
+		public string TargetGUID = string.Empty;
+
+		public CameraTurnToAction()
+		{
+			Type = EActionType.CameraTurnTo;
 		}
 	}
 

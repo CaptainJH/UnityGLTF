@@ -37,6 +37,7 @@ public class U4KSequenceEditor : Editor
 		//"GotoAndPlay",
 		//"GotoAndStop",
 		"PlayAnimation",
+		"CameraTurnTo",
 		};
 	int actionTypeIndex = 0;
 
@@ -46,12 +47,24 @@ public class U4KSequenceEditor : Editor
 		seqDesc = target as U4KSequenceDesc;
 		seqDesc.LoadFromJson();
 		if (seqDesc.sequence == null) seqDesc.sequence = new CoursePlayer.Core.SceneSequence();
+
+		if (seqDesc.sequence.Trigger.GetType() == typeof(CoursePlayer.Core.ClickEventDesc))
+			triggerTypeIndex = 0;
+		else if (seqDesc.sequence.Trigger.GetType() == typeof(CoursePlayer.Core.PluginEventDesc))
+			triggerTypeIndex = 1;
+		else if (seqDesc.sequence.Trigger.GetType() == typeof(CoursePlayer.Core.OnEnterSlideEventDesc))
+			triggerTypeIndex = 2;
+
+		if (string.IsNullOrEmpty(seqDesc.GUID))
+			seqDesc.GUID = System.Guid.NewGuid().ToString();
 	}
 
 	public override void OnInspectorGUI()
 	{
+		var allSeqDesc = GameObject.FindObjectsOfType<U4KSequenceDesc>();
 		serializedObject.Update();
         EditorGUILayout.PropertyField(NameProp);
+		EditorGUILayout.LabelField(seqDesc.GUID);
 
         var originIndex = triggerTypeIndex;
 		triggerTypeIndex = EditorGUILayout.Popup(triggerTypeIndex, triggerTypes);
@@ -74,6 +87,7 @@ public class U4KSequenceEditor : Editor
 				default:
 					break;
 			}
+			EditorUtility.SetDirty(target);
 		}
 
 		if (seqDesc.sequence.Trigger != null)
@@ -98,7 +112,10 @@ public class U4KSequenceEditor : Editor
 						EditorGUILayout.EndHorizontal();
 
 						if (curIndex != nextIndex)
+						{
 							p.SetValue(seqDesc.sequence.Trigger, allEnums.GetValue(nextIndex));
+							EditorUtility.SetDirty(target);
+						}
 					}
 					else if (p.PropertyType == typeof(string))
 					{
@@ -107,7 +124,10 @@ public class U4KSequenceEditor : Editor
 						var eventName = p.GetValue(seqDesc.sequence.Trigger) as string;
 						var newName = EditorGUILayout.TextField(eventName);
 						if (newName != eventName)
+						{
 							p.SetValue(seqDesc.sequence.Trigger, newName);
+							EditorUtility.SetDirty(target);
+						}
 						EditorGUILayout.EndHorizontal();
 					}
 				}
@@ -131,11 +151,92 @@ public class U4KSequenceEditor : Editor
 						EditorGUILayout.LabelField(p.Name);
 						var originV = p.GetValue(ac) as string;
 						var curV = EditorGUILayout.TextField(originV);
-						p.SetValue(ac, curV);
+						if (curV != originV)
+						{
+							p.SetValue(ac, curV);
+							EditorUtility.SetDirty(target);
+						}
 						EditorGUILayout.EndHorizontal();
 					}
+					else if (p.PropertyType == typeof(float))
+					{
+						var originV = (float)p.GetValue(ac);
+						var curV = EditorGUILayout.FloatField(p.Name, originV);
+						if (curV != originV)
+						{
+							p.SetValue(ac, curV);
+							EditorUtility.SetDirty(target);
+						}
+					}
+					else if (p.PropertyType == typeof(U4KSequenceDesc))
+					{
+						if (ac is CoursePlayer.Core.CameraTurnToAction)
+						{
+							var cta = ac as CoursePlayer.Core.CameraTurnToAction;
+							U4KSequenceDesc originTarget = null;
+							if (!string.IsNullOrEmpty(cta.TargetGUID) && cta.Target == null)
+							{
+								foreach (var desc in allSeqDesc)
+									if (desc.GUID == cta.TargetGUID)
+									{
+										originTarget = desc;
+										break;
+									}
+							}
+							else
+								originTarget = p.GetValue(ac) as U4KSequenceDesc;
+							var curV = EditorGUILayout.ObjectField(p.Name, originTarget, typeof(U4KSequenceDesc));
+							if (originTarget != curV && ac is CoursePlayer.Core.CameraTurnToAction)
+							{
+								cta.TargetGUID = (curV as U4KSequenceDesc).GUID;
+								p.SetValue(ac, curV);
+								EditorUtility.SetDirty(target);
+							}
+						}
+					}
+					else if (p.Name == "AffectedControls")
+					{
+						EditorGUILayout.LabelField("Affected Scene Objects");
+						int newCount = EditorGUILayout.IntField("Count", ac.AffectedControls.Count);
+						if (newCount >= 0)
+						{
+							if (newCount < ac.AffectedControls.Count)
+							{
+								ac.AffectedControls.RemoveRange(newCount, ac.AffectedControls.Count - newCount);
+								EditorUtility.SetDirty(target);
+							}
+							else if (newCount > ac.AffectedControls.Count)
+							{
+								var originCount = ac.AffectedControls.Count;
+								for (int i = 0; i < newCount - originCount; ++i)
+									ac.AffectedControls.Add(string.Empty);
+								EditorUtility.SetDirty(target);
+							}
+						}
+
+						for (int i = 0; i < ac.AffectedControls.Count; ++i)
+						{
+							var objGUID = ac.AffectedControls[i];
+							U4KSequenceDesc sceneObj = null;
+							if (!string.IsNullOrEmpty(objGUID))
+							{
+								sceneObj = Array.Find(allSeqDesc, (U4KSequenceDesc seq) =>
+								{
+									return seq.GUID == objGUID;
+								});
+							}
+
+							var newObj = EditorGUILayout.ObjectField(sceneObj, typeof(U4KSequenceDesc)) as U4KSequenceDesc;
+							if (newObj != sceneObj)
+							{
+								ac.AffectedControls[i] = newObj.GUID;
+								EditorUtility.SetDirty(target);
+							}
+						}
+					}
+
 				}
-				//obj = EditorGUILayout.ObjectField(obj, typeof(Camera));
+
                 EditorGUILayout.EndFoldoutHeaderGroup();
 				EditorGUILayout.Separator();
 				++currentActionIndex;
@@ -170,16 +271,24 @@ public class U4KSequenceEditor : Editor
 		{
 			newAction = new CoursePlayer.Core.AppearAction();
 		}
-		else if(newActionName == "Disappear")
+		else if (newActionName == "Disappear")
 		{
 			newAction = new CoursePlayer.Core.DisappearAction();
 		}
-		else if(newActionName == "PlayAnimation")
+		else if (newActionName == "PlayAnimation")
 		{
 			newAction = new CoursePlayer.Core.PlayAnimationAction();
 		}
+		else if (newActionName == "CameraTurnTo")
+		{
+			newAction = new CoursePlayer.Core.CameraTurnToAction();
+		}
 
-		if (newAction != null) seqDesc.sequence.Actions.Add(newAction);
+		if (newAction != null)
+		{
+			seqDesc.sequence.Actions.Add(newAction);
+			EditorUtility.SetDirty(target);
+		}
 	}
 
 	void ShowActionContextMenu(Rect position)

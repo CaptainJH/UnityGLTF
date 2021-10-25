@@ -6,6 +6,7 @@ public class U4KSequenceDesc : MonoBehaviour
 	public string SequenceName = string.Empty;
     public CoursePlayer.Core.SceneSequence sequence;
 	public string jsonString = string.Empty;
+	public string GUID = string.Empty;
 
     public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
     {
@@ -13,7 +14,7 @@ public class U4KSequenceDesc : MonoBehaviour
         NullValueHandling = NullValueHandling.Ignore,
         // DefaultValueHandling = DefaultValueHandling.Ignore,
         Formatting = Formatting.Indented,
-    };
+	};
 
     public void SaveToJson()
 	{
