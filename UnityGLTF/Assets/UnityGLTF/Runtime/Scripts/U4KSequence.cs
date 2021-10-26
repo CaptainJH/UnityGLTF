@@ -362,7 +362,8 @@ namespace CoursePlayer.Core
 
 	public class SceneSequence
 	{
-		public string Name;
+		public string Name = string.Empty;
+		public string GUID = string.Empty;
 
 		public AnimEventDesc Trigger = new ClickEventDesc();
 

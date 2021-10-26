@@ -54,9 +54,6 @@ public class U4KSequenceEditor : Editor
 			triggerTypeIndex = 1;
 		else if (seqDesc.sequence.Trigger.GetType() == typeof(CoursePlayer.Core.OnEnterSlideEventDesc))
 			triggerTypeIndex = 2;
-
-		if (string.IsNullOrEmpty(seqDesc.GUID))
-			seqDesc.GUID = System.Guid.NewGuid().ToString();
 	}
 
 	public override void OnInspectorGUI()
